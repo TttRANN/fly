@@ -5,52 +5,6 @@ import pywt
 from scipy.signal import periodogram, find_peaks, savgol_filter
 import random
 import re
-
-# # Function to align trajectory and set stimulus onset at (0, 0)
-# def align_trajectory(trial_df, stim_start_idx):
-#     # Select pre-stimulus data
-#     pre_stim_data = trial_df.iloc[:stim_start_idx]
-#     if len(pre_stim_data) < 2:
-#         # Not enough data to compute alignment
-#         print(f"Trial {trial_df['Trial_Num'].iloc[0]}: Not enough pre-stimulus data to compute alignment.")
-#         # Shift so that the onset of the stimulation is at (0, 0)
-#         trial_df['x_aligned'] = trial_df['x'] - trial_df['x'].iloc[stim_start_idx]
-#         trial_df['y_aligned'] = trial_df['y'] - trial_df['y'].iloc[stim_start_idx]
-#         return trial_df
-
-#     # Compute the net displacement vector from the first to the last pre-stimulus point
-#     dx = pre_stim_data['x'].iloc[-1] - pre_stim_data['x'].iloc[0]
-#     dy = pre_stim_data['y'].iloc[-1] - pre_stim_data['y'].iloc[0]
-
-#     # If the fly hasn't moved before the stimulus, set angle to zero
-#     if np.hypot(dx, dy) < 1e-4:
-#         angle_to_align = 0.0
-#     else:
-#         # Compute angle of the net displacement vector
-#         angle_to_align = np.degrees(np.arctan2(dy, dx))
-
-#     # Align such that the net movement is along the positive y-axis
-#     rotation_angle = 90 - angle_to_align
-
-#     rotation_matrix = np.array([
-#         [np.cos(np.radians(rotation_angle)), -np.sin(np.radians(rotation_angle))],
-#         [np.sin(np.radians(rotation_angle)),  np.cos(np.radians(rotation_angle))]
-#     ])
-
-#     # Apply rotation to the original coordinates
-#     coords = np.c_[trial_df['x'], trial_df['y']]
-#     rotated_coords = np.dot(coords, rotation_matrix.T)
-
-#     # Shift coordinates so that the stimulus onset is at (0, 0)
-#     x_shift = rotated_coords[stim_start_idx, 0]
-#     y_shift = rotated_coords[stim_start_idx, 1]
-#     x_aligned = rotated_coords[:, 0] - x_shift
-#     y_aligned = rotated_coords[:, 1] - y_shift
-
-#     trial_df['x_aligned'] = x_aligned
-#     trial_df['y_aligned'] = y_aligned
-
-#     return trial_df
 def align_trajectory(trial_df, stim_start_idx):
     # Check if we have enough data to compute the orientation 2 frames before stimulation onset
     if stim_start_idx < 3:

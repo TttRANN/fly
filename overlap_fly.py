@@ -82,6 +82,7 @@ def process_video(input_video_path, output_dir, start_frame, end_frame, frame_st
                     x, y, w, h = cv2.boundingRect(biggest_contour)
                     fly_image_cropped = fly_image[y:y+h, x:x+w]
                     fly_mask_cropped = fly_mask[y:y+h, x:x+w]
+                    fly_image = cv2.resize(fly_image, (10, 10))
 
                     # Convert the cropped fly image to RGBA
                     fly_image_rgba = cv2.cvtColor(fly_image_cropped, cv2.COLOR_BGR2RGBA)
@@ -110,8 +111,29 @@ def process_video(input_video_path, output_dir, start_frame, end_frame, frame_st
 
 
         if fly_positions:
-            x_positions, y_positions = zip(*fly_positions)
-            plt.plot(x_positions, y_positions, color='yellow', linewidth=2)
+                
+
+                x_positions, y_positions = zip(*fly_positions)
+                dx = np.diff(x_positions)
+                dy = np.diff(y_positions)
+                # plt.figure(dpi=1500)
+                # print(np.size(dx))
+                # print(np.size(x_positions))
+                plt.plot(x_positions[:6], y_positions[:6], color='white', linewidth=2)
+                print(np.size(x_positions))
+                plt.plot(x_positions[5:], y_positions[5:], color='red', linewidth=2)
+    #             plt.quiver(x_positions[:6], y_positions[:6],  # Starting points of arrows
+    #     dx[0:6], dy[0:6],  # Direction vectors (differences between points)
+    #     angles='xy', scale_units='xy', scale=1, color='white', width=0.005
+    # )
+    #             plt.quiver(x_positions[8:30], y_positions[8:30],  # Starting points of arrows
+    #     dx[7:29], dy[7:29],  # Direction vectors (differences between points)
+    #     angles='xy', scale_units='xy', scale=1, color='red', width=0.005
+    # )
+    #             plt.quiver(x_positions[31:-1], y_positions[31:-1],  # Starting points of arrows
+    #     dx[30:-1], dy[30:-1],  # Direction vectors (differences between points)
+    #     angles='xy', scale_units='xy', scale=1, color='white', width=0.005
+    # )
 
         # Save the figure
         output_image_path = os.path.join(output_dir, f"fly_trajectory_{start_frame}_to_{end_frame}_step_{frame_step}.png")
@@ -165,7 +187,7 @@ def overlay_image(background, overlay, x, y):
 if __name__ == "__main__":
     # Input video path
     # input_video_path = "path_to_your_video.mp4"
-    input_video_path = '/Users/tairan/Downloads/testfor/cas9_plexa-male_batch1/seg1_filtered_0_arena_0_l2sec/segment_42719_42959_last_2_seconds.mp4'
+    input_video_path = '/Users/tairan/Downloads/testfor/cas9_plexa-male_batch1/seg1_filtered_0_arena_0_l2sec/segment_20159_20399_last_2_seconds.mp4'
   # Replace with your video file path
 
     # Output directory to save the results
@@ -175,8 +197,8 @@ if __name__ == "__main__":
 
     # Parameters for processing
     start_frame = 0          # Starting frame number
-    end_frame = 200      # Ending frame number
-    frame_step = 10          # Process every 'frame_step' frames
+    end_frame = 300      # Ending frame number
+    frame_step = 30          # Process every 'frame_step' frames
 
     # Call the process_video function
     process_video(input_video_path, output_dir, start_frame, end_frame, frame_step)
