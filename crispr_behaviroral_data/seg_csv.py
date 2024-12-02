@@ -2,12 +2,9 @@ import os
 import glob
 import pandas as pd
 
-# Base directory containing the subfolders
-import os
-import glob
 
 # Base directory containing the subfolders
-base_dir = '/Users/tairan/Downloads/testfor'
+base_dir = ''
 
 # Print the base directory to ensure it's correct
 print(f"Base directory: {base_dir}")
