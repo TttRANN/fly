@@ -10,14 +10,6 @@ file_info = [
 rows = []
 
 
-# safgra;fnw;afnbewa;fewafewafewaf
-#testhahahahahhha
-# test
-# wafnaw;fewa;fnewa;
-#new 
-# avcjeadnv;rwa
-#ewafoerwahfrwqafwqhpf
-#newbee
 # Loop through each dictionary in file_info
 for dic in file_info:
     # Append a row to the list
