@@ -119,7 +119,7 @@ def is_fly_responsive(trial_data, speed_threshold=7):
 import os
 import glob
 
-folder_path = '/Users/tairan/Downloads/testfor/cas9_plexa-male_batch1'
+folder_path = ''
 pre_stim_frames = 6  # Frames before stimulation starts
 post_stim_frames = 30  # Frames after stimulation starts
 
